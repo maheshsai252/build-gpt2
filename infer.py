@@ -13,9 +13,6 @@ elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
         device = "mps"
 print(f"using device: {device}")
 
-model.eval()
-
-
 def load_model(model_path, device='cuda'):
     # Initialize your model architecture
     model = GPT(GPTConfig(vocab_size=50304))

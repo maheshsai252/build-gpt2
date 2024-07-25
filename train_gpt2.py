@@ -350,7 +350,7 @@ raw_model = model.module if ddp else model # always contains the "raw" unwrapped
 max_lr = 6e-4
 min_lr = max_lr * 0.1
 warmup_steps = 715
-max_steps = 500 # 19,073 steps is ~1 epoch, if data is 10B tokens and batch size 0.5M tokens
+max_steps = 5 # 19,073 steps is ~1 epoch, if data is 10B tokens and batch size 0.5M tokens
 def get_lr(it):
     # 1) linear warmup for warmup_iters steps
     if it < warmup_steps:
@@ -520,3 +520,28 @@ for step in range(max_steps):
 
 if ddp:
     destroy_process_group()
+
+# save the model weights
+if master_process:
+    print("Training completed. Saving model weights...")
+    
+    # Define the path where you want to save the model
+    save_path = "model_weights.pt"
+    
+    # If you're using DistributedDataParallel, you need to save the internal model
+    if ddp:
+        model_to_save = model.module
+    else:
+        model_to_save = model
+    
+    # Save the model state dict
+    torch.save(model_to_save.state_dict(), save_path)
+    
+    print(f"Model weights saved to {save_path}")
+
+# Optionally, you can also save the optimizer state if you want to resume training later
+optimizer_save_path = "optimizer_state.pt"
+torch.save(optimizer.state_dict(), optimizer_save_path)
+print(f"Optimizer state saved to {optimizer_save_path}")
+
+print("Training and saving completed.")

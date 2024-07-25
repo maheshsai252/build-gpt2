@@ -8,7 +8,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 from hellaswag import render_example, iterate_examples
 # -----------------------------------------------------------------------------
-torch._dynamo.config.suppress_errors = True
+# torch._dynamo.config.suppress_errors = True
 class CausalSelfAttention(nn.Module):
 
     def __init__(self, config):
@@ -339,7 +339,7 @@ torch.set_float32_matmul_precision('high')
 model = GPT(GPTConfig(vocab_size=50304))
 # model = GPT.from_pretrained("gpt2") # or init from OpenAI GPT-2
 model.to(device)
-use_compile = True # torch.compile interferes with HellaSwag eval and Generation. TODO fix
+use_compile = False # torch.compile interferes with HellaSwag eval and Generation. TODO fix
 if use_compile:
     model = torch.compile(model)
 if ddp:

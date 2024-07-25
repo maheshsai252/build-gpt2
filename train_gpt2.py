@@ -477,9 +477,11 @@ for step in range(max_steps):
         # print the generated text
         for i in range(num_return_sequences):
             tokens = xgen[i, :max_length].tolist()
-            decoded = enc.decode(tokens)
-            print(f"rank {ddp_rank} sample {i}: {decoded}")
-
+            try:
+                decoded = enc.decode(tokens)
+                print(f"rank {ddp_rank} sample {i}: {decoded}")
+            except:
+                print(tokens)
     # do one step of the optimization
     model.train()
     optimizer.zero_grad()

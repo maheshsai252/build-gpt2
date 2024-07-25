@@ -8,7 +8,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 from hellaswag import render_example, iterate_examples
 # -----------------------------------------------------------------------------
-
+torch._dynamo.config.suppress_errors = True
 class CausalSelfAttention(nn.Module):
 
     def __init__(self, config):

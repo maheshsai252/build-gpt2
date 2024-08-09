@@ -30,7 +30,7 @@ def load_model(model_path, device='cuda'):
     model.eval()
     
     return model
-model = load_model('model_weights.pt')
+model = load_model('model_weights.pt', device)
 
 print("Model loaded successfully!")
 

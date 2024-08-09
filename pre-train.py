@@ -34,7 +34,7 @@ model.resize_token_embeddings(len(tokenizer))
 dataset = load_dataset("wikitext", "wikitext-2-v1", split="train")
 
 # Function to create a smaller dataset
-def create_small_dataset(dataset, num_samples=1000, min_length=50):
+def create_small_dataset(dataset, num_samples=10000, min_length=50):
     small_dataset = []
     for item in dataset:
         text = item['text']
@@ -71,7 +71,7 @@ dataset = SmallWikitextDataset(small_dataset, tokenizer, max_length=512)
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 
 # Training settings
-num_epochs = 5
+num_epochs = 15
 num_training_steps = num_epochs * len(dataloader)
 num_warmup_steps = num_training_steps // 10
 

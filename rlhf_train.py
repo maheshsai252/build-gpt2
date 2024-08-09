@@ -73,11 +73,11 @@ for episode in tqdm(range(num_episodes)):
     generated_text, sentiment, reward = reinforce(model, optimizer, prompt)
 
     # # Logging
-    # wandb.log({
-    #     "episode": episode,
-    #     "sentiment": sentiment,
-    #     "reward": reward,
-    # })
+    wandb.log({
+        "episode": episode,
+        "sentiment": sentiment,
+        "reward": reward,
+    })
 
     if episode % 100 == 0:
         print(f"Episode {episode}")
